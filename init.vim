@@ -1,7 +1,10 @@
 call plug#begin(has('nvim') ? stdpath('data') . 'plugged' : '~/.vim/plugged')
 
 Plug 'tpope/vim-sensible'
+
 Plug 'coherentnonsense/nvim-blackcat'
+Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
+
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
 
@@ -17,13 +20,19 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
 call plug#end()
 
 colorscheme blackcat
+autocmd FileType silic colorscheme nordic
+autocmd FileType markdown colorscheme nordic
+autocmd FileType bson colorscheme nordic
 set termguicolors
 
 set shiftwidth=4
 set autoindent
+set expandtab
 set number
 set relativenumber
 syntax on
@@ -46,7 +55,7 @@ lua <<EOF
       end,
     },
     mapping = cmp.mapping.preset.insert({
-	['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+	-- ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 	['<Tab>'] = cmp.mapping(function(fallback)
 	    if cmp.visible() then
 		cmp.select_next_item()
@@ -75,8 +84,13 @@ lua <<EOF
 
     -- Set up lspconfig.
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    require('lspconfig').clangd.setup {
+    local lspconfig = require('lspconfig')
+    lspconfig.clangd.setup {
 	capabilities = capabilities
     }
+    lspconfig.svls.setup {}
+    lspconfig.tsserver.setup {}
+    lspconfig.rust_analyzer.setup {}
+    lspconfig.html.setup {}
 EOF
 
