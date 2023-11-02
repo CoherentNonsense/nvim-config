@@ -39,6 +39,9 @@ syntax on
 
 " Keybindings
 nnoremap ff <cmd>Telescope find_files<cr>
+" navigating long lines
+nnoremap j gj
+nnoremap k gk
 
 lua <<EOF
     require("mason").setup()
