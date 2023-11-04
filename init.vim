@@ -25,9 +25,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 call plug#end()
 
 colorscheme blackcat
-autocmd FileType silic colorscheme nordic
 autocmd FileType markdown colorscheme nordic
-autocmd FileType bson colorscheme nordic
 set termguicolors
 
 set shiftwidth=4
